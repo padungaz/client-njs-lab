@@ -5,16 +5,15 @@ import {
 
 import Layout from "./components/Layout";
 import HomePage from "./page/HomePage";
-import UsersPage from "./page/UsersPage";
-
+import AddProduct from "./page/AddProduct";
 
 function App() {
 
   return (
     <Layout>
       <Routes>
-        <Route path="/" element={<HomePage />} />
-        <Route path="/users" element={<UsersPage />} />
+        <Route path="/" exact element={<HomePage />} />
+        <Route path="/add-product" element={<AddProduct />} />
       </Routes>
     </Layout>
   );

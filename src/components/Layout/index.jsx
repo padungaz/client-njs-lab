@@ -1,16 +1,58 @@
 import React from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation } from "react-router-dom";
+import './style.css';
+
+const listCategory = [
+  {
+    id: 1,
+    path: "/",
+    name: "Shop"
+  },
+  {
+    id: 2,
+    path: "/products",
+    name: "Products"
+  },
+  {
+    id: 3,
+    path: "/cart",
+    name: "Cart"
+  },
+  {
+    id: 4,
+    path: "/order",
+    name: "Order"
+  },
+  {
+    id: 5,
+    path: "/add-product",
+    name: "Add Product"
+  },
+  {
+    id: 6,
+    path: "/admin-products",
+    name: "Admin Products"
+  },
+]
 
 const Layout = (props) => {
-    const navigate = useNavigate();
+  const { pathname } = useLocation();
 
-    return (
-        <div style={{ padding: "30px" }}>
-            <div>
-                <a href="/" onClick={() => { navigate("/") }}>Enter User</a> | <a href="/users" onClick={() => { navigate("/users") }}>Users</a>
-            </div>
-            <main>{props?.children}</main>
-        </div>
-    );
+  return (
+    <>
+      <header className="main-header">
+        <nav className="main-header__nav">
+          <ul className="main-header__item-list">
+            {listCategory.map(category => (
+              <li key={category.id} className="main-header__item">
+                <a href={category.path} className={pathname === category.path ? 'active' : ''}>{category.name}</a>
+              </li>
+            ))}
+          </ul>
+        </nav>
+      </header>
+      <main>{props?.children}</main>
+    </>
+  );
 };
 export default Layout;

@@ -1,42 +1,49 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from 'react';
+import './style.css';
 
-function HomePage() {
-    const [userName, setUserName] = useState("");
-    const navigate = useNavigate();
+const ProductList = () => {
+    const [productList, setProductList] = useState([]);
 
-    const handleAddUser = async () => {
+    useEffect(() => {
+        fetchUsers();
+    }, []);
+
+    const fetchUsers = async () => {
         try {
-            const response = await fetch("http://localhost:5000/admin/add-user", {
-                method: 'POST',
-                headers: {
-                    'Content-Type': 'application/json'
-                },
-                body: JSON.stringify({ userName })
-            });
-
-            if (response.ok) {
-                navigate("/users");
-            } else {
-                console.error("Error");
-            }
+            const response = await fetch("http://localhost:5000");
+            const data = await response.json();
+            setProductList(data);
         } catch (error) {
             console.error("Error:", error);
         }
     };
-
     return (
-        <>
-            <div>
-                <input
-                    type="text"
-                    value={userName}
-                    onChange={(e) => setUserName(e.target.value)}
-                />
-                <button onClick={handleAddUser}>Add User</button>
-            </div>
-        </>
+        <main>
+            {productList?.length > 0 ? (
+                <div className="grid">
+                    {productList?.map((product, index) => (
+                        <article key={index} className="card product-item">
+                            <header className="card__header">
+                                <h1 className="product__title">{product?.title}</h1>
+                            </header>
+                            <div className="card__image">
+                                <img src={product?.imageUrl} alt="" />
+                            </div>
+                            <div className="card__content">
+                                <h2 className="product__price">${product?.price}</h2>
+                                <p className="product__description">{product?.description}</p>
+                            </div>
+                            <div className="card__actions">
+                                <button className="btn">Add to Cart</button>
+                            </div>
+                        </article>
+                    ))}
+                </div>
+            ) : (
+                <h1>No Products</h1>
+            )}
+        </main>
     );
 }
 
-export default HomePage;
+export default ProductList;
