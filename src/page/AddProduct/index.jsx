@@ -45,11 +45,11 @@ const AddProduct = () => {
         </div>
         <div className="form-control">
           <label htmlFor="price">Price</label>
-          <input type="number" name="price" id="price" />
+          <input type="number" name="price" id="price" tep="0.01" />
         </div>
         <div className="form-control">
           <label htmlFor="description">Description</label>
-          <textarea name="description" id="description" rows="4" cols="50" />
+          <textarea name="description" id="description" rows="5" />
         </div>
         <button type="submit" className="btn">Add Product</button>
       </form>
